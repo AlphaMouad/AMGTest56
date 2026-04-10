@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@font-face {
+    font-family: 'Cherstron';
+    src: url('/fonts/cherston_regular-webfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/Futura-Heavy.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: 'Cherstron', 'Inter', sans-serif;
+    --font-sans: 'Futura', 'Inter', sans-serif;
+    --font-futura: 'Futura', sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --color-amg-gold: #DEA821;
+    --color-amg-gold-light: #F9D976;
+    --color-amg-gold-dark: #A67C00;
+    --color-platinum: #E5E4E2;
+    --color-obsidian: #161103;
+    --color-void: #000000;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    --animate-ticker: ticker 40s linear infinite;
+    --animate-spin-slow: spin 12s linear infinite;
+
+    @keyframes ticker {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+}
+
+:root {
+    /* Deep charcoal / obsidian background */
+    --background: #161103;
+    --foreground: oklch(0.985 0 0);
+    --card: #1c1604;
+    --card-foreground: oklch(0.985 0 0);
+    --popover: #1c1604;
+    --popover-foreground: oklch(0.985 0 0);
+    
+    /* Default to Platinum/Silver for FDI */
+    --primary: oklch(0.85 0.01 250); /* Platinum/Silver */
+    --primary-foreground: oklch(0.12 0 0);
+    
+    --secondary: oklch(0.20 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.20 0 0);
+    --muted-foreground: oklch(0.70 0 0);
+    --accent: oklch(0.20 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.65 0.2 20); /* Deep Red for Kill Screen */
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 10%);
+    --ring: oklch(0.85 0.01 250);
+    
+    --radius: 0.25rem;
+    
+    --brand-400: #F2C94C;
+    --brand-700: #DEA821;
+    --button-primary-bg_hover: #C7961D;
+    --button-primary-fg: #000000;
+    --button-primary-fg_hover: #000000;
+    --button-primary-border_hover: #C7961D;
+}
+
+:root[data-view="retail"],
+[data-view="retail"] {
+    /* Gold/Bronze for Retail */
+    --primary: oklch(0.80 0.12 80); /* Rich Gold/Bronze */
+    --ring: oklch(0.80 0.12 80);
+}
+
+.dark {
+    --background: #161103;
+    --foreground: oklch(0.985 0 0);
+    --card: #1c1604;
+    --card-foreground: oklch(0.985 0 0);
+    --popover: #1c1604;
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.85 0.01 250); /* Platinum/Silver */
+    --primary-foreground: oklch(0.12 0 0);
+    --secondary: oklch(0.20 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.20 0 0);
+    --muted-foreground: oklch(0.70 0 0);
+    --accent: oklch(0.20 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.65 0.2 20);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 10%);
+    --ring: oklch(0.85 0.01 250);
+}
+
+.dark[data-view="retail"] {
+    --primary: oklch(0.80 0.12 80); /* Rich Gold/Bronze */
+    --ring: oklch(0.80 0.12 80);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center transition-all duration-500 rounded-full uppercase font-futura tracking-[0.15em] relative overflow-hidden;
+  }
+  
+  .btn.primary {
+    background: linear-gradient(135deg, #F9D976 0%, #DEA821 45%, #A67C00 100%);
+    color: #000000;
+    box-shadow: 0 10px 25px -5px rgba(166, 124, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    border: none;
+    font-weight: 800;
+  }
+  
+  .btn.primary::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full;
+    transition: transform 0.6s ease;
+  }
+
+  .btn.primary:hover::after {
+    @apply translate-x-full;
+  }
+  
+  .btn.primary:hover {
+    background: linear-gradient(135deg, #DEA821 0%, #A67C00 100%);
+    box-shadow: 0 15px 30px -5px rgba(166, 124, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .glass-panel {
+    @apply bg-obsidian/80 backdrop-blur-2xl border border-white/10 shadow-2xl;
+  }
+
+  .rim-light {
+    @apply relative;
+  }
+
+  .rim-light::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none;
+  }
+}
