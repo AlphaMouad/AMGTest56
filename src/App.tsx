@@ -5,7 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { 
   MapPin, Maximize, ArrowRight, Zap, 
   ChevronDown, Crosshair, Shield, Globe, TrendingUp,
-  CheckCircle2, XCircle, Activity
+  CheckCircle2, XCircle, Activity, Globe2, ShieldAlert, Lock
 } from 'lucide-react';
 import { nodes, ViewType, NodeData, PackData } from './data/packs';
 
@@ -42,7 +42,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#161103] text-white font-sans flex flex-col overflow-hidden selection:bg-amg-gold/30 relative">
+    <div className="h-screen w-full bg-[#1D180C] text-white font-sans flex flex-col overflow-hidden selection:bg-amg-gold/30 relative">
       
       {/* Global Noise Texture Overlay for Elite Depth */}
       <div 
@@ -51,22 +51,22 @@ export default function App() {
       />
 
       {/* SECTION 1: GLOBAL HEADER */}
-      <header className="h-20 shrink-0 border-b border-white/[0.05] bg-[#000000]/90 backdrop-blur-2xl flex items-center px-8 z-40 relative">
+      <header className="h-24 shrink-0 border-b border-[#6C6961] bg-[#1D180C]/80 backdrop-blur-3xl flex items-center px-10 z-40 relative shadow-md">
         {/* Logo */}
-        <div className="flex items-center w-72 shrink-0 group cursor-pointer">
+        <div className="flex items-center w-80 shrink-0 group cursor-pointer">
           <div className="relative">
             <img 
               src="https://amg-building.com/wp-content/uploads/2025/04/Logo.svg" 
               alt="AMG Building" 
-              className="h-6 w-auto object-contain relative z-10 transition-transform duration-500 group-hover:scale-110"
+              className="h-8 w-auto object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 drop-shadow-md"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute -inset-4 bg-amg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute -inset-6 bg-amg-gold/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
         </div>
 
         {/* Ticker */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden mask-edges">
+        <div className="flex-1 flex items-center justify-center overflow-hidden mask-edges opacity-80 hover:opacity-100 transition-opacity duration-500">
           <div className="flex items-center gap-6 animate-ticker whitespace-nowrap">
             <span className="text-[9px] font-bold tracking-[0.2em] text-white/40 uppercase mr-2 flex items-center gap-2">
               <Activity className="w-3.5 h-3.5 text-amg-gold" strokeWidth={1.5} /> The AMG Domination Moat:
@@ -94,7 +94,7 @@ export default function App() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* SECTION 2: INTERACTIVE MAP PANEL (Left) */}
-        <div className="w-1/2 h-full relative bg-[#161103] border-r border-white/[0.05] overflow-hidden">
+        <div className="w-[50%] h-full relative bg-[#1D180C] border-r border-[#6C6961] overflow-hidden">
           
           <Map
             ref={mapRef}
@@ -143,7 +143,7 @@ export default function App() {
                       )}
 
                       {/* Outer Spin */}
-                      <div className={`absolute inset-0 border border-dashed rounded-full transition-all duration-1000 ${isActive ? 'border-amg-gold/80 animate-[spin_8s_linear_infinite]' : 'border-white/10 group-hover:border-amg-gold/30'}`} />
+                      <div className={`absolute inset-0 border border-dashed rounded-full transition-all duration-1000 ${isActive ? 'border-amg-gold/80 animate-[spin_8s_linear_infinite]' : 'border-[#6C6961] group-hover:border-amg-gold/30'}`} />
                       
                       {/* Corner Brackets (HUD Style) */}
                       <div className={`absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 transition-colors duration-500 ${isActive ? 'border-amg-gold' : 'border-white/20'}`} />
@@ -177,7 +177,7 @@ export default function App() {
                     <div className={`absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-4 py-2 rounded bg-[#0a0a0a]/95 backdrop-blur-xl border transition-all duration-500 ${
                       isActive 
                         ? 'border-amg-gold/40 text-amg-gold shadow-[0_8px_30px_rgba(0,0,0,0.8)] opacity-100 translate-y-0' 
-                        : 'border-white/10 text-white/60 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg'
+                        : 'border-[#6C6961] text-[#9C9A94] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg'
                     }`}>
                       <span className="font-heading text-[10px] tracking-[0.2em] uppercase">{node.name}</span>
                     </div>
@@ -204,7 +204,7 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="absolute bottom-8 left-8 right-8 p-6 rounded-[2rem] bg-[#161103]/90 backdrop-blur-2xl border border-white/[0.05] shadow-2xl"
+              className="absolute bottom-8 left-8 right-8 p-6 rounded-[2rem] bg-[#1D180C]/90 backdrop-blur-2xl border border-[#6C6961] shadow-2xl"
             >
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amg-gold/30 to-transparent" />
               <div className="flex items-start gap-5">
@@ -221,48 +221,100 @@ export default function App() {
         </div>
 
         {/* SECTION 3: DYNAMIC DATA DASHBOARD (Right) */}
-        <div className="w-1/2 h-full overflow-y-auto bg-[#000000] relative custom-scrollbar">
+        <div className="w-[50%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar shadow-[-30px_0_60px_rgba(0,0,0,0.8)] z-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1D180C] via-[#0a0804] to-[#000000] pointer-events-none" />
           
-          {/* Sub-navigation for Packs (Segmented Control Style) */}
-          {selectedNode.packs.length > 1 && (
-            <div className="sticky top-0 z-40 bg-[#000000]/90 backdrop-blur-2xl border-b border-white/[0.05] p-4">
-              <div className="flex p-1.5 bg-white/[0.03] border border-white/[0.05] rounded-lg relative">
-                {selectedNode.packs.map(pack => (
-                  <button
-                    key={pack.id}
-                    onClick={() => {
-                      setSelectedPackId(pack.id);
-                      setExpandedSection(null);
-                    }}
-                    className={`relative flex-1 py-3 font-futura rounded-full text-[11px] tracking-[0.15em] uppercase z-10 transition-colors duration-300 ${
-                      selectedPackId === pack.id ? 'text-[#000000]' : 'text-white/40 hover:text-white/80'
-                    }`}
-                  >
-                    {selectedPackId === pack.id && (
-                      <motion.div
-                        layoutId="activePackTab"
-                        className="absolute inset-0 bg-amg-gold rounded-full -z-10 shadow-[0_0_20px_rgba(222,168,33,0.2)]"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    {pack.name}
-                  </button>
-                ))}
+          {/* Header Strip with Glassmorphism */}
+          <div className="sticky top-0 z-50 p-8 pt-10 border-b border-[#6C6961]/50 bg-gradient-to-b from-[#2F2A1F]/90 to-[#1D180C]/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amg-gold/80 to-transparent opacity-80" />
+
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center shadow-[0_0_30px_rgba(222,168,33,0.4)] border border-[#1D180C]">
+                  <Globe2 className="text-[#1D180C] w-7 h-7" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h1 className="font-heading text-2xl tracking-[0.25em] text-white uppercase font-black drop-shadow-lg">Dubai Expansion Matrix</h1>
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                    <span className="font-heading text-[11px] tracking-[0.4em] text-amg-gold/80 uppercase font-bold">Live Intelligence Feed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button className="w-14 h-14 rounded-full border border-[#6C6961] flex items-center justify-center text-white/50 hover:text-white hover:border-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all bg-[#2F2A1F]/50 backdrop-blur-md">
+                  <ShieldAlert className="w-6 h-6" strokeWidth={1.5} />
+                </button>
+                <button className="w-14 h-14 rounded-full border border-[#6C6961] flex items-center justify-center text-white/50 hover:text-white hover:border-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all bg-[#2F2A1F]/50 backdrop-blur-md">
+                  <Lock className="w-6 h-6" strokeWidth={1.5} />
+                </button>
               </div>
             </div>
-          )}
 
-          <div className="p-8">
+            {/* Quick Stats */}
+            <div className="flex items-center gap-8 overflow-hidden">
+              <div className="flex items-center gap-3 bg-[#2F2A1F] border border-[#6C6961] px-5 py-2.5 rounded-full shadow-inner hover:bg-[#383327] transition-colors">
+                <Zap className="w-4 h-4 text-amg-gold" />
+                <span className="font-mono text-[12px] tracking-wider text-white/90">SYS.OP.NOMINAL</span>
+              </div>
+              <div className="flex items-center gap-3 bg-[#2F2A1F] border border-[#6C6961] px-5 py-2.5 rounded-full shadow-inner hover:bg-[#383327] transition-colors">
+                <Activity className="w-4 h-4 text-amg-gold" />
+                <span className="font-mono text-[12px] tracking-wider text-white/90">LATENCY: 12ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-12 relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedPack.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
+                {/* Dossier Header */}
+                <div className="mb-14">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="bg-gradient-to-r from-amg-gold to-amg-gold-light px-5 py-2 rounded-sm shadow-[0_0_20px_rgba(222,168,33,0.5)]">
+                      <span className="font-heading text-[11px] tracking-[0.4em] uppercase text-[#000000] font-black">Classified Dossier</span>
+                    </div>
+                  </div>
+                  <h2 className="font-heading text-6xl md:text-7xl tracking-tighter text-white mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] font-black">
+                    {selectedPack.name}
+                  </h2>
+                </div>
+                {/* Sub-navigation for Packs (Segmented Control Style) */}
+                {selectedNode.packs.length > 1 && (
+                  <div className="mb-12">
+                    <div className="flex p-2 bg-[#2F2A1F]/50 border border-[#6C6961] rounded-2xl relative shadow-inner backdrop-blur-md">
+                      {selectedNode.packs.map(pack => (
+                        <button
+                          key={pack.id}
+                          onClick={() => {
+                            setSelectedPackId(pack.id);
+                            setExpandedSection(null);
+                          }}
+                          className={`relative flex-1 py-4 font-heading rounded-xl text-[12px] font-bold tracking-[0.2em] uppercase z-10 transition-all duration-500 ${
+                            selectedPackId === pack.id ? 'text-[#000000]' : 'text-white/40 hover:text-white/80 hover:bg-white/5'
+                          }`}
+                        >
+                          {selectedPackId === pack.id && (
+                            <motion.div
+                              layoutId="activePackTab"
+                              className="absolute inset-0 bg-gradient-to-r from-[#F9D976] to-[#DEA821] rounded-xl -z-10 shadow-[0_0_25px_rgba(222,168,33,0.3)] border border-white/20"
+                              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                            />
+                          )}
+                          {pack.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {/* A. HERO MEDIA & QUICK STATS */}
-                <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-10 border border-white/[0.05] group shadow-2xl">
+                <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-10 border border-[#6C6961] group shadow-2xl">
                   <div className="absolute inset-0 bg-white/5 transition-transform duration-1000 group-hover:scale-105" 
                        style={{
                          backgroundImage: 'url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop")',
@@ -300,7 +352,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="bg-[#161103] border border-white/[0.05] rounded-[2rem] p-10 mb-12 relative overflow-hidden group"
+                  className="bg-[#1D180C] border border-[#6C6961] rounded-[2rem] p-10 mb-12 relative overflow-hidden group"
                 >
                   <div className="absolute top-0 left-0 w-1 h-full bg-amg-gold/50" />
                   
@@ -318,18 +370,18 @@ export default function App() {
                 </motion.div>
 
                 {/* C. THE DUAL-VIEW INTERFACE */}
-                <div className="flex flex-col items-center justify-center p-12 bg-[#161103] border border-white/[0.05] rounded-[2.5rem] mb-10 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amg-gold/5 via-transparent to-transparent opacity-40" />
+                <div className="flex flex-col items-center justify-center p-14 bg-gradient-to-b from-[#1D180C] to-[#120F08] border border-[#6C6961] rounded-[2.5rem] mb-12 relative overflow-hidden shadow-2xl">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amg-gold/10 via-transparent to-transparent opacity-60" />
                   
-                  <span className="font-heading text-[9px] tracking-[0.3em] text-white/30 uppercase mb-8 relative z-10">Contextual Data Matrix</span>
+                  <span className="font-heading text-[10px] tracking-[0.4em] text-[#9C9A94] uppercase mb-8 relative z-10 font-bold">Contextual Data Matrix</span>
                   
-                  <div className="flex p-1 bg-[#000000] border border-white/5 rounded-full relative w-full max-w-md z-10">
+                  <div className="flex p-1.5 bg-[#120F08] border border-[#6C6961] rounded-full relative w-full max-w-md z-10 shadow-inner">
                     {['INSTITUTIONAL', 'RETAIL'].map((t) => (
                       <button
                         key={t}
                         onClick={() => setView(t as ViewType)}
                         className={`relative flex-1 py-3 font-heading rounded-full text-[10px] font-bold tracking-[0.25em] uppercase z-10 transition-all duration-500 ${
-                          view === t ? 'text-[#000000]' : 'text-white/30 hover:text-white/60'
+                          view === t ? 'text-[#000000]' : 'text-white/30 hover:text-[#9C9A94]'
                         }`}
                       >
                         {view === t && (
@@ -377,23 +429,23 @@ export default function App() {
                     onClick={() => setExpandedSection(expandedSection === 'killscreen' ? null : 'killscreen')}
                     icon={<Crosshair className="w-5 h-5" strokeWidth={1.5} />}
                   >
-                    <div className="bg-[#161103] border border-white/10 rounded-[2rem] p-8 relative overflow-hidden shadow-inner">
+                    <div className="bg-[#1D180C] border border-[#6C6961] rounded-[2rem] p-8 relative overflow-hidden shadow-inner">
                       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-white/20 via-white/5 to-transparent" />
                       
-                      <h4 className="font-heading text-xs tracking-[0.15em] text-white mb-8 border-b border-white/[0.05] pb-5 uppercase">
+                      <h4 className="font-heading text-xs tracking-[0.15em] text-white mb-8 border-b border-[#6C6961] pb-5 uppercase">
                         {selectedPack.killScreen.title}
                       </h4>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         {/* Competitor Weakness */}
                         <div className="space-y-5">
-                          <div className="flex items-center gap-3 text-white/60">
-                            <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-white/10">
+                          <div className="flex items-center gap-3 text-[#9C9A94]">
+                            <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-[#6C6961]">
                               <XCircle className="w-4 h-4" strokeWidth={1.5} />
                             </div>
                             <span className="font-heading text-[10px] tracking-[0.2em] uppercase">Competitor Flaw</span>
                           </div>
-                          <p className="text-[15px] text-white/60 leading-relaxed font-light border-l-2 border-white/10 pl-5">
+                          <p className="text-[15px] text-[#9C9A94] leading-relaxed font-light border-l-2 border-[#6C6961] pl-5">
                             {selectedPack.killScreen.competitorWeakness}
                           </p>
                         </div>
@@ -401,12 +453,12 @@ export default function App() {
                         {/* AMG Strength */}
                         <div className="space-y-5">
           <div className="flex items-center gap-3 text-[#000000]">
-                            <div className="w-8 h-8 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-white/10 shadow-lg">
-                              <CheckCircle2 className="w-4 h-4" strokeWidth={1.5} />
+                            <div className="w-10 h-10 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-[#1D180C] shadow-[0_0_20px_rgba(222,168,33,0.3)]">
+                              <CheckCircle2 className="w-5 h-5 text-[#1D180C]" strokeWidth={2} />
                             </div>
-                            <span className="font-heading text-[10px] tracking-[0.2em] uppercase text-amg-gold">AMG Advantage</span>
+                            <span className="font-heading text-[11px] tracking-[0.25em] uppercase text-amg-gold font-bold">AMG Advantage</span>
                           </div>
-                          <p className="text-[15px] text-white/90 leading-relaxed font-light border-l-2 border-amg-gold/30 pl-5">
+                          <p className="text-[16px] text-white leading-relaxed font-light border-l-2 border-amg-gold/50 pl-5 bg-gradient-to-r from-amg-gold/5 to-transparent py-2">
                             {selectedPack.killScreen.amgAdvantage}
                           </p>
                         </div>
@@ -416,10 +468,10 @@ export default function App() {
                 </div>
 
                 {/* E. ACTION FOOTER */}
-                <div className="pt-8 border-t border-white/[0.05]">
-                  <button className="btn primary w-full py-6 px-10 flex items-center justify-center gap-6 text-[11px] tracking-[0.3em] group shadow-[0_10px_40px_rgba(166,124,0,0.4)]">
-                    <span className="font-black">Greenlight: Initiate Dubai SPV for {selectedPack.name}</span>
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-500" strokeWidth={1.5} />
+                <div className="pt-10 border-t border-[#6C6961] pb-10">
+                  <button className="btn primary w-full py-7 px-10 flex items-center justify-center gap-6 text-[12px] tracking-[0.35em] group shadow-[0_15px_50px_rgba(222,168,33,0.25)] hover:shadow-[0_20px_60px_rgba(222,168,33,0.4)] transition-all duration-500">
+                    <span className="font-black drop-shadow-sm">Greenlight: Initiate Dubai SPV for {selectedPack.name}</span>
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-4 transition-transform duration-500" strokeWidth={2} />
                   </button>
                 </div>
 
@@ -464,9 +516,9 @@ export default function App() {
 
 function Badge({ icon, text }: { icon: ReactNode, text: string }) {
   return (
-    <div className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.08] px-4 py-2 rounded-full shrink-0 shadow-sm">
+    <div className="flex items-center gap-2 bg-white/[0.03] border border-[#6C6961] px-4 py-2 rounded-full shrink-0 shadow-sm">
       <div className="text-amg-gold">{icon}</div>
-      <span className="font-heading text-[9px] tracking-[0.2em] text-white/60 uppercase">{text}</span>
+      <span className="font-heading text-[9px] tracking-[0.2em] text-[#9C9A94] uppercase">{text}</span>
     </div>
   );
 }
@@ -474,32 +526,32 @@ function Badge({ icon, text }: { icon: ReactNode, text: string }) {
 function StatCard({ label, value, highlight = false, delay = 0 }: { label: string, value: string, highlight?: boolean, delay?: number }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-amg-gold/[0.08] border-amg-gold/40' : 'bg-[#161103] border-white/[0.05]'} border transition-all duration-700 hover:border-white/20`}
+      transition={{ delay, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-gradient-to-b from-amg-gold/[0.08] to-transparent border-amg-gold/50 shadow-[0_0_30px_rgba(222,168,33,0.1)]' : 'bg-gradient-to-b from-[#1D180C] to-black/40 border-[#6C6961] shadow-xl'} border transition-all duration-700 hover:-translate-y-1 hover:shadow-2xl hover:border-white/30`}
     >
-      <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${highlight ? 'via-amg-gold' : 'via-white/20'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
-      <span className="font-heading block text-[10px] tracking-[0.4em] text-white/20 uppercase mb-4 font-bold transition-colors duration-500 group-hover:text-white/40">{label}</span>
-      <span className={`block font-mono tracking-tighter ${highlight ? 'text-amg-gold text-5xl font-black drop-shadow-[0_0_15px_rgba(222,168,33,0.3)]' : 'text-white text-4xl font-extralight opacity-80 group-hover:opacity-100 transition-opacity duration-500'}`}>{value}</span>
+      <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${highlight ? 'via-amg-gold' : 'via-white/30'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
+      <span className={`font-heading block text-[11px] tracking-[0.3em] uppercase mb-4 transition-colors duration-500 ${highlight ? 'text-amg-gold/80 font-bold' : 'text-white/40 group-hover:text-white/60'}`}>{label}</span>
+      <span className={`block font-sans tracking-tight ${highlight ? 'text-amg-gold text-5xl font-black drop-shadow-[0_0_20px_rgba(222,168,33,0.4)]' : 'text-white text-4xl font-light opacity-90 group-hover:opacity-100 transition-opacity duration-500'}`}>{value}</span>
     </motion.div>
   );
 }
 
 function Accordion({ title, isOpen, onClick, children, icon }: { title: string, isOpen: boolean, onClick: () => void, children: ReactNode, icon?: ReactNode }) {
   return (
-    <div className={`border transition-all duration-500 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-[#161103] border-amg-gold/20' : 'bg-[#161103] border-white/[0.05] hover:border-white/20'}`}>
+    <div className={`border transition-all duration-700 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-gradient-to-b from-[#1D180C] to-black/60 border-amg-gold/40 shadow-[0_10px_40px_rgba(0,0,0,0.5)]' : 'bg-[#1D180C] border-[#6C6961] hover:border-white/20 hover:bg-[#221c0e]'}`}>
       <button 
         onClick={onClick}
         className="w-full flex items-center justify-between p-8"
       >
         <div className="flex items-center gap-6">
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-amg-gold text-[#000000]' : 'bg-white/[0.02] border border-white/[0.05] text-amg-gold'}`}>
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-inner ${isOpen ? 'bg-gradient-to-br from-amg-gold to-amg-gold-dark text-[#000000] shadow-[0_0_20px_rgba(222,168,33,0.4)] scale-105' : 'bg-[#2F2A1F] border border-[#6C6961] text-amg-gold group-hover:scale-105'}`}>
             {icon}
           </div>
-          <span className={`font-heading text-[11px] tracking-[0.25em] uppercase transition-colors duration-500 ${isOpen ? 'text-white font-bold' : 'text-white/50'}`}>{title}</span>
+          <span className={`font-heading text-[12px] tracking-[0.3em] uppercase transition-all duration-500 ${isOpen ? 'text-white font-black drop-shadow-md' : 'text-[#9C9A94] font-medium'}`}>{title}</span>
         </div>
-        <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 bg-amg-gold border-amg-gold text-[#000000]' : 'bg-transparent border-white/10 text-white/30'}`}>
+        <div className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-700 ${isOpen ? 'rotate-180 bg-white border-white text-[#000000] shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-transparent border-[#6C6961] text-white/40'}`}>
           <ChevronDown className="w-5 h-5" />
         </div>
       </button>
@@ -509,10 +561,10 @@ function Accordion({ title, isOpen, onClick, children, icon }: { title: string, 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="p-6 pt-0 mt-2">
+            <div className="p-8 pt-0 mt-2 border-t border-white/5 mx-8">
               {children}
             </div>
           </motion.div>
