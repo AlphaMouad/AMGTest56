@@ -29,6 +29,7 @@
     --color-amg-gold-dark: #A67C00;
     --color-amg-tabs: #2F2A1F;
     --color-amg-border: #6C6961;
+    --color-amg-text-muted: #9C9A94;
     --color-platinum: #E5E4E2;
     --color-obsidian: #161103;
     --color-void: #000000;
@@ -82,9 +83,9 @@
 
 :root {
     /* Brand Design System */
-    --background: #262116; /* Updated main background */
+    --background: #1D180C; /* Darker main background */
     --foreground: #FFFFFF;
-    --card: #1D180C; /* Updated container color */
+    --card: #1D180C; /* Container color matching background */
     --card-foreground: #FFFFFF;
     --popover: #1D180C;
     --popover-foreground: #FFFFFF;
@@ -122,7 +123,7 @@
 }
 
 .dark {
-    --background: #262116;
+    --background: #1D180C;
     --foreground: #FFFFFF;
     --card: #1D180C;
     --card-foreground: #FFFFFF;
