@@ -51,22 +51,22 @@ export default function App() {
       />
 
       {/* SECTION 1: GLOBAL HEADER */}
-      <header className="h-20 shrink-0 border-b border-[#6C6961] bg-[#1D180C]/90 backdrop-blur-2xl flex items-center px-8 z-40 relative">
+      <header className="h-24 shrink-0 border-b border-[#6C6961] bg-[#1D180C]/80 backdrop-blur-3xl flex items-center px-10 z-40 relative shadow-md">
         {/* Logo */}
-        <div className="flex items-center w-72 shrink-0 group cursor-pointer">
+        <div className="flex items-center w-80 shrink-0 group cursor-pointer">
           <div className="relative">
             <img 
               src="https://amg-building.com/wp-content/uploads/2025/04/Logo.svg" 
               alt="AMG Building" 
-              className="h-6 w-auto object-contain relative z-10 transition-transform duration-500 group-hover:scale-110"
+              className="h-8 w-auto object-contain relative z-10 transition-transform duration-700 group-hover:scale-110 drop-shadow-md"
               referrerPolicy="no-referrer"
             />
-            <div className="absolute -inset-4 bg-amg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute -inset-6 bg-amg-gold/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
           </div>
         </div>
 
         {/* Ticker */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden mask-edges">
+        <div className="flex-1 flex items-center justify-center overflow-hidden mask-edges opacity-80 hover:opacity-100 transition-opacity duration-500">
           <div className="flex items-center gap-6 animate-ticker whitespace-nowrap">
             <span className="text-[9px] font-bold tracking-[0.2em] text-white/40 uppercase mr-2 flex items-center gap-2">
               <Activity className="w-3.5 h-3.5 text-amg-gold" strokeWidth={1.5} /> The AMG Domination Moat:
@@ -94,7 +94,7 @@ export default function App() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* SECTION 2: INTERACTIVE MAP PANEL (Left) */}
-        <div className="w-[70%] h-full relative bg-[#1D180C] border-r border-[#6C6961] overflow-hidden">
+        <div className="w-[50%] h-full relative bg-[#1D180C] border-r border-[#6C6961] overflow-hidden">
           
           <Map
             ref={mapRef}
@@ -221,7 +221,7 @@ export default function App() {
         </div>
 
         {/* SECTION 3: DYNAMIC DATA DASHBOARD (Right) */}
-        <div className="w-[30%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar">
+        <div className="w-[50%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar">
           
           {/* Sub-navigation for Packs (Segmented Control Style) */}
           {selectedNode.packs.length > 1 && (
@@ -318,12 +318,12 @@ export default function App() {
                 </motion.div>
 
                 {/* C. THE DUAL-VIEW INTERFACE */}
-                <div className="flex flex-col items-center justify-center p-12 bg-[#1D180C] border border-[#6C6961] rounded-[2.5rem] mb-10 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amg-gold/5 via-transparent to-transparent opacity-40" />
+                <div className="flex flex-col items-center justify-center p-14 bg-gradient-to-b from-[#1D180C] to-[#120F08] border border-[#6C6961] rounded-[2.5rem] mb-12 relative overflow-hidden shadow-2xl">
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amg-gold/10 via-transparent to-transparent opacity-60" />
                   
-                  <span className="font-heading text-[9px] tracking-[0.3em] text-white/30 uppercase mb-8 relative z-10">Contextual Data Matrix</span>
+                  <span className="font-heading text-[10px] tracking-[0.4em] text-[#9C9A94] uppercase mb-8 relative z-10 font-bold">Contextual Data Matrix</span>
                   
-                  <div className="flex p-1 bg-[#1D180C] border border-white/5 rounded-full relative w-full max-w-md z-10">
+                  <div className="flex p-1.5 bg-[#120F08] border border-[#6C6961] rounded-full relative w-full max-w-md z-10 shadow-inner">
                     {['INSTITUTIONAL', 'RETAIL'].map((t) => (
                       <button
                         key={t}
@@ -401,12 +401,12 @@ export default function App() {
                         {/* AMG Strength */}
                         <div className="space-y-5">
           <div className="flex items-center gap-3 text-[#000000]">
-                            <div className="w-8 h-8 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-[#6C6961] shadow-lg">
-                              <CheckCircle2 className="w-4 h-4" strokeWidth={1.5} />
+                            <div className="w-10 h-10 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-[#1D180C] shadow-[0_0_20px_rgba(222,168,33,0.3)]">
+                              <CheckCircle2 className="w-5 h-5 text-[#1D180C]" strokeWidth={2} />
                             </div>
-                            <span className="font-heading text-[10px] tracking-[0.2em] uppercase text-amg-gold">AMG Advantage</span>
+                            <span className="font-heading text-[11px] tracking-[0.25em] uppercase text-amg-gold font-bold">AMG Advantage</span>
                           </div>
-                          <p className="text-[15px] text-white/90 leading-relaxed font-light border-l-2 border-amg-gold/30 pl-5">
+                          <p className="text-[16px] text-white leading-relaxed font-light border-l-2 border-amg-gold/50 pl-5 bg-gradient-to-r from-amg-gold/5 to-transparent py-2">
                             {selectedPack.killScreen.amgAdvantage}
                           </p>
                         </div>
@@ -416,10 +416,10 @@ export default function App() {
                 </div>
 
                 {/* E. ACTION FOOTER */}
-                <div className="pt-8 border-t border-[#6C6961]">
-                  <button className="btn primary w-full py-6 px-10 flex items-center justify-center gap-6 text-[11px] tracking-[0.3em] group shadow-[0_10px_40px_rgba(166,124,0,0.4)]">
-                    <span className="font-black">Greenlight: Initiate Dubai SPV for {selectedPack.name}</span>
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-500" strokeWidth={1.5} />
+                <div className="pt-10 border-t border-[#6C6961] pb-10">
+                  <button className="btn primary w-full py-7 px-10 flex items-center justify-center gap-6 text-[12px] tracking-[0.35em] group shadow-[0_15px_50px_rgba(222,168,33,0.25)] hover:shadow-[0_20px_60px_rgba(222,168,33,0.4)] transition-all duration-500">
+                    <span className="font-black drop-shadow-sm">Greenlight: Initiate Dubai SPV for {selectedPack.name}</span>
+                    <ArrowRight className="w-6 h-6 group-hover:translate-x-4 transition-transform duration-500" strokeWidth={2} />
                   </button>
                 </div>
 
