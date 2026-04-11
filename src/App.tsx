@@ -42,7 +42,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen w-full bg-[#161103] text-white font-sans flex flex-col overflow-hidden selection:bg-amg-gold/30 relative">
+    <div className="h-screen w-full bg-[#1D180C] text-white font-sans flex flex-col overflow-hidden selection:bg-amg-gold/30 relative">
       
       {/* Global Noise Texture Overlay for Elite Depth */}
       <div 
@@ -51,7 +51,7 @@ export default function App() {
       />
 
       {/* SECTION 1: GLOBAL HEADER */}
-      <header className="h-20 shrink-0 border-b border-white/[0.05] bg-[#000000]/90 backdrop-blur-2xl flex items-center px-8 z-40 relative">
+      <header className="h-20 shrink-0 border-b border-[#6C6961] bg-[#1D180C]/90 backdrop-blur-2xl flex items-center px-8 z-40 relative">
         {/* Logo */}
         <div className="flex items-center w-72 shrink-0 group cursor-pointer">
           <div className="relative">
@@ -94,7 +94,7 @@ export default function App() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* SECTION 2: INTERACTIVE MAP PANEL (Left) */}
-        <div className="w-1/2 h-full relative bg-[#161103] border-r border-white/[0.05] overflow-hidden">
+        <div className="w-[70%] h-full relative bg-[#1D180C] border-r border-[#6C6961] overflow-hidden">
           
           <Map
             ref={mapRef}
@@ -143,7 +143,7 @@ export default function App() {
                       )}
 
                       {/* Outer Spin */}
-                      <div className={`absolute inset-0 border border-dashed rounded-full transition-all duration-1000 ${isActive ? 'border-amg-gold/80 animate-[spin_8s_linear_infinite]' : 'border-white/10 group-hover:border-amg-gold/30'}`} />
+                      <div className={`absolute inset-0 border border-dashed rounded-full transition-all duration-1000 ${isActive ? 'border-amg-gold/80 animate-[spin_8s_linear_infinite]' : 'border-[#6C6961] group-hover:border-amg-gold/30'}`} />
                       
                       {/* Corner Brackets (HUD Style) */}
                       <div className={`absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 transition-colors duration-500 ${isActive ? 'border-amg-gold' : 'border-white/20'}`} />
@@ -177,7 +177,7 @@ export default function App() {
                     <div className={`absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-4 py-2 rounded bg-[#0a0a0a]/95 backdrop-blur-xl border transition-all duration-500 ${
                       isActive 
                         ? 'border-amg-gold/40 text-amg-gold shadow-[0_8px_30px_rgba(0,0,0,0.8)] opacity-100 translate-y-0' 
-                        : 'border-white/10 text-white/60 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg'
+                        : 'border-[#6C6961] text-[#9C9A94] opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 shadow-lg'
                     }`}>
                       <span className="font-heading text-[10px] tracking-[0.2em] uppercase">{node.name}</span>
                     </div>
@@ -204,7 +204,7 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
-              className="absolute bottom-8 left-8 right-8 p-6 rounded-[2rem] bg-[#161103]/90 backdrop-blur-2xl border border-white/[0.05] shadow-2xl"
+              className="absolute bottom-8 left-8 right-8 p-6 rounded-[2rem] bg-[#1D180C]/90 backdrop-blur-2xl border border-[#6C6961] shadow-2xl"
             >
               <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amg-gold/30 to-transparent" />
               <div className="flex items-start gap-5">
@@ -221,12 +221,12 @@ export default function App() {
         </div>
 
         {/* SECTION 3: DYNAMIC DATA DASHBOARD (Right) */}
-        <div className="w-1/2 h-full overflow-y-auto bg-[#000000] relative custom-scrollbar">
+        <div className="w-[30%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar">
           
           {/* Sub-navigation for Packs (Segmented Control Style) */}
           {selectedNode.packs.length > 1 && (
-            <div className="sticky top-0 z-40 bg-[#000000]/90 backdrop-blur-2xl border-b border-white/[0.05] p-4">
-              <div className="flex p-1.5 bg-white/[0.03] border border-white/[0.05] rounded-lg relative">
+            <div className="sticky top-0 z-40 bg-[#1D180C]/90 backdrop-blur-2xl border-b border-[#6C6961] p-4">
+              <div className="flex p-1.5 bg-white/[0.03] border border-[#6C6961] rounded-lg relative">
                 {selectedNode.packs.map(pack => (
                   <button
                     key={pack.id}
@@ -262,7 +262,7 @@ export default function App() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 {/* A. HERO MEDIA & QUICK STATS */}
-                <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-10 border border-white/[0.05] group shadow-2xl">
+                <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-10 border border-[#6C6961] group shadow-2xl">
                   <div className="absolute inset-0 bg-white/5 transition-transform duration-1000 group-hover:scale-105" 
                        style={{
                          backgroundImage: 'url("https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop")',
@@ -300,7 +300,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="bg-[#161103] border border-white/[0.05] rounded-[2rem] p-10 mb-12 relative overflow-hidden group"
+                  className="bg-[#1D180C] border border-[#6C6961] rounded-[2rem] p-10 mb-12 relative overflow-hidden group"
                 >
                   <div className="absolute top-0 left-0 w-1 h-full bg-amg-gold/50" />
                   
@@ -318,18 +318,18 @@ export default function App() {
                 </motion.div>
 
                 {/* C. THE DUAL-VIEW INTERFACE */}
-                <div className="flex flex-col items-center justify-center p-12 bg-[#161103] border border-white/[0.05] rounded-[2.5rem] mb-10 relative overflow-hidden">
+                <div className="flex flex-col items-center justify-center p-12 bg-[#1D180C] border border-[#6C6961] rounded-[2.5rem] mb-10 relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amg-gold/5 via-transparent to-transparent opacity-40" />
                   
                   <span className="font-heading text-[9px] tracking-[0.3em] text-white/30 uppercase mb-8 relative z-10">Contextual Data Matrix</span>
                   
-                  <div className="flex p-1 bg-[#000000] border border-white/5 rounded-full relative w-full max-w-md z-10">
+                  <div className="flex p-1 bg-[#1D180C] border border-white/5 rounded-full relative w-full max-w-md z-10">
                     {['INSTITUTIONAL', 'RETAIL'].map((t) => (
                       <button
                         key={t}
                         onClick={() => setView(t as ViewType)}
                         className={`relative flex-1 py-3 font-heading rounded-full text-[10px] font-bold tracking-[0.25em] uppercase z-10 transition-all duration-500 ${
-                          view === t ? 'text-[#000000]' : 'text-white/30 hover:text-white/60'
+                          view === t ? 'text-[#000000]' : 'text-white/30 hover:text-[#9C9A94]'
                         }`}
                       >
                         {view === t && (
@@ -377,23 +377,23 @@ export default function App() {
                     onClick={() => setExpandedSection(expandedSection === 'killscreen' ? null : 'killscreen')}
                     icon={<Crosshair className="w-5 h-5" strokeWidth={1.5} />}
                   >
-                    <div className="bg-[#161103] border border-white/10 rounded-[2rem] p-8 relative overflow-hidden shadow-inner">
+                    <div className="bg-[#1D180C] border border-[#6C6961] rounded-[2rem] p-8 relative overflow-hidden shadow-inner">
                       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-white/20 via-white/5 to-transparent" />
                       
-                      <h4 className="font-heading text-xs tracking-[0.15em] text-white mb-8 border-b border-white/[0.05] pb-5 uppercase">
+                      <h4 className="font-heading text-xs tracking-[0.15em] text-white mb-8 border-b border-[#6C6961] pb-5 uppercase">
                         {selectedPack.killScreen.title}
                       </h4>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         {/* Competitor Weakness */}
                         <div className="space-y-5">
-                          <div className="flex items-center gap-3 text-white/60">
-                            <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-white/10">
+                          <div className="flex items-center gap-3 text-[#9C9A94]">
+                            <div className="w-8 h-8 rounded bg-white/5 flex items-center justify-center border border-[#6C6961]">
                               <XCircle className="w-4 h-4" strokeWidth={1.5} />
                             </div>
                             <span className="font-heading text-[10px] tracking-[0.2em] uppercase">Competitor Flaw</span>
                           </div>
-                          <p className="text-[15px] text-white/60 leading-relaxed font-light border-l-2 border-white/10 pl-5">
+                          <p className="text-[15px] text-[#9C9A94] leading-relaxed font-light border-l-2 border-[#6C6961] pl-5">
                             {selectedPack.killScreen.competitorWeakness}
                           </p>
                         </div>
@@ -401,7 +401,7 @@ export default function App() {
                         {/* AMG Strength */}
                         <div className="space-y-5">
           <div className="flex items-center gap-3 text-[#000000]">
-                            <div className="w-8 h-8 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-white/10 shadow-lg">
+                            <div className="w-8 h-8 rounded bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center border border-[#6C6961] shadow-lg">
                               <CheckCircle2 className="w-4 h-4" strokeWidth={1.5} />
                             </div>
                             <span className="font-heading text-[10px] tracking-[0.2em] uppercase text-amg-gold">AMG Advantage</span>
@@ -416,7 +416,7 @@ export default function App() {
                 </div>
 
                 {/* E. ACTION FOOTER */}
-                <div className="pt-8 border-t border-white/[0.05]">
+                <div className="pt-8 border-t border-[#6C6961]">
                   <button className="btn primary w-full py-6 px-10 flex items-center justify-center gap-6 text-[11px] tracking-[0.3em] group shadow-[0_10px_40px_rgba(166,124,0,0.4)]">
                     <span className="font-black">Greenlight: Initiate Dubai SPV for {selectedPack.name}</span>
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-500" strokeWidth={1.5} />
@@ -464,9 +464,9 @@ export default function App() {
 
 function Badge({ icon, text }: { icon: ReactNode, text: string }) {
   return (
-    <div className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.08] px-4 py-2 rounded-full shrink-0 shadow-sm">
+    <div className="flex items-center gap-2 bg-white/[0.03] border border-[#6C6961] px-4 py-2 rounded-full shrink-0 shadow-sm">
       <div className="text-amg-gold">{icon}</div>
-      <span className="font-heading text-[9px] tracking-[0.2em] text-white/60 uppercase">{text}</span>
+      <span className="font-heading text-[9px] tracking-[0.2em] text-[#9C9A94] uppercase">{text}</span>
     </div>
   );
 }
@@ -477,7 +477,7 @@ function StatCard({ label, value, highlight = false, delay = 0 }: { label: strin
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-amg-gold/[0.08] border-amg-gold/40' : 'bg-[#161103] border-white/[0.05]'} border transition-all duration-700 hover:border-white/20`}
+      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-amg-gold/[0.08] border-amg-gold/40' : 'bg-[#1D180C] border-[#6C6961]'} border transition-all duration-700 hover:border-white/20`}
     >
       <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${highlight ? 'via-amg-gold' : 'via-white/20'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
       <span className="font-heading block text-[10px] tracking-[0.4em] text-white/20 uppercase mb-4 font-bold transition-colors duration-500 group-hover:text-white/40">{label}</span>
@@ -488,18 +488,18 @@ function StatCard({ label, value, highlight = false, delay = 0 }: { label: strin
 
 function Accordion({ title, isOpen, onClick, children, icon }: { title: string, isOpen: boolean, onClick: () => void, children: ReactNode, icon?: ReactNode }) {
   return (
-    <div className={`border transition-all duration-500 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-[#161103] border-amg-gold/20' : 'bg-[#161103] border-white/[0.05] hover:border-white/20'}`}>
+    <div className={`border transition-all duration-500 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-[#1D180C] border-amg-gold/20' : 'bg-[#1D180C] border-[#6C6961] hover:border-white/20'}`}>
       <button 
         onClick={onClick}
         className="w-full flex items-center justify-between p-8"
       >
         <div className="flex items-center gap-6">
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-amg-gold text-[#000000]' : 'bg-white/[0.02] border border-white/[0.05] text-amg-gold'}`}>
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-amg-gold text-[#000000]' : 'bg-[#2F2A1F] border border-[#6C6961] text-amg-gold'}`}>
             {icon}
           </div>
-          <span className={`font-heading text-[11px] tracking-[0.25em] uppercase transition-colors duration-500 ${isOpen ? 'text-white font-bold' : 'text-white/50'}`}>{title}</span>
+          <span className={`font-heading text-[11px] tracking-[0.25em] uppercase transition-colors duration-500 ${isOpen ? 'text-white font-bold' : 'text-[#9C9A94]'}`}>{title}</span>
         </div>
-        <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 bg-amg-gold border-amg-gold text-[#000000]' : 'bg-transparent border-white/10 text-white/30'}`}>
+        <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 bg-amg-gold border-amg-gold text-[#000000]' : 'bg-transparent border-[#6C6961] text-white/30'}`}>
           <ChevronDown className="w-5 h-5" />
         </div>
       </button>
