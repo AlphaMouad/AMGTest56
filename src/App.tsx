@@ -9,7 +9,8 @@ import {
 } from 'lucide-react';
 import { nodes, ViewType, NodeData, PackData } from './data/packs';
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoidnBzbW9lcm9ja3MiLCJhIjoiY21qaWY1czlsMHAzNzNnc2Nmc21qNXM3bSJ9.EWmJAoL7TH7Dx5mm_v7tIg";
+// Use environment variable for Mapbox token to avoid hardcoding secrets
+const MAPBOX_TOKEN = import.meta.env?.VITE_MAPBOX_TOKEN || process.env.VITE_MAPBOX_TOKEN || "";
 
 export default function App() {
   const [selectedNodeId, setSelectedNodeId] = useState<string>(nodes[0].id);
@@ -94,8 +95,38 @@ export default function App() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* SECTION 2: INTERACTIVE MAP PANEL (Left) */}
-        <div className="w-1/2 h-full relative bg-[#161103] border-r border-white/[0.05] overflow-hidden">
+        <div className="w-1/2 h-full relative bg-[#161103] border-r border-white/[0.05] overflow-hidden flex flex-col">
           
+          {!MAPBOX_TOKEN ? (
+            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center z-10 bg-[#161103]">
+              <div className="w-24 h-24 rounded-full bg-amg-gold/10 flex items-center justify-center mb-8 border border-amg-gold/20 shadow-[0_0_50px_rgba(222,168,33,0.15)]">
+                <MapPin className="w-10 h-10 text-amg-gold" strokeWidth={1} />
+              </div>
+              <h2 className="font-heading text-2xl tracking-[0.2em] text-white uppercase mb-4">Mapbox Token Required</h2>
+              <p className="text-white/60 text-[15px] max-w-md leading-relaxed font-light mb-8">
+                The geospatial intelligence matrix requires a valid Mapbox token to initialize. Please configure your environment variables to proceed.
+              </p>
+              <div className="bg-black/50 border border-white/10 rounded-xl p-6 text-left w-full max-w-md backdrop-blur-md">
+                <h3 className="font-heading text-[10px] tracking-[0.2em] text-amg-gold uppercase mb-4 flex items-center gap-2">
+                  <Shield className="w-3.5 h-3.5" /> Configuration Steps
+                </h3>
+                <ol className="space-y-4 text-sm text-white/70 font-light">
+                  <li className="flex gap-3">
+                    <span className="text-amg-gold font-mono">01.</span>
+                    <span>Go to Settings {'>'} Secrets in AI Studio</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-amg-gold font-mono">02.</span>
+                    <span>Add a new secret named <code className="bg-white/10 px-2 py-0.5 rounded text-white font-mono text-xs ml-1">VITE_MAPBOX_TOKEN</code></span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="text-amg-gold font-mono">03.</span>
+                    <span>Paste your public Mapbox token as the value</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          ) : (
           <Map
             ref={mapRef}
             mapboxAccessToken={MAPBOX_TOKEN}
@@ -186,6 +217,7 @@ export default function App() {
               );
             })}
           </Map>
+          )}
 
           {/* Map Overlay Gradients & Effects */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#000000]/80 via-transparent to-[#000000]/90 pointer-events-none" />
