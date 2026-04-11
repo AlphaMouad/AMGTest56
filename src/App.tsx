@@ -5,7 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { 
   MapPin, Maximize, ArrowRight, Zap, 
   ChevronDown, Crosshair, Shield, Globe, TrendingUp,
-  CheckCircle2, XCircle, Activity
+  CheckCircle2, XCircle, Activity, Globe2, ShieldAlert, Lock
 } from 'lucide-react';
 import { nodes, ViewType, NodeData, PackData } from './data/packs';
 
@@ -221,46 +221,98 @@ export default function App() {
         </div>
 
         {/* SECTION 3: DYNAMIC DATA DASHBOARD (Right) */}
-        <div className="w-[50%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar">
+        <div className="w-[50%] h-full overflow-y-auto bg-[#1D180C] relative custom-scrollbar shadow-[-30px_0_60px_rgba(0,0,0,0.8)] z-20">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1D180C] via-[#0a0804] to-[#000000] pointer-events-none" />
           
-          {/* Sub-navigation for Packs (Segmented Control Style) */}
-          {selectedNode.packs.length > 1 && (
-            <div className="sticky top-0 z-40 bg-[#1D180C]/90 backdrop-blur-2xl border-b border-[#6C6961] p-4">
-              <div className="flex p-1.5 bg-white/[0.03] border border-[#6C6961] rounded-lg relative">
-                {selectedNode.packs.map(pack => (
-                  <button
-                    key={pack.id}
-                    onClick={() => {
-                      setSelectedPackId(pack.id);
-                      setExpandedSection(null);
-                    }}
-                    className={`relative flex-1 py-3 font-futura rounded-full text-[11px] tracking-[0.15em] uppercase z-10 transition-colors duration-300 ${
-                      selectedPackId === pack.id ? 'text-[#000000]' : 'text-white/40 hover:text-white/80'
-                    }`}
-                  >
-                    {selectedPackId === pack.id && (
-                      <motion.div
-                        layoutId="activePackTab"
-                        className="absolute inset-0 bg-amg-gold rounded-full -z-10 shadow-[0_0_20px_rgba(222,168,33,0.2)]"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
-                    {pack.name}
-                  </button>
-                ))}
+          {/* Header Strip with Glassmorphism */}
+          <div className="sticky top-0 z-50 p-8 pt-10 border-b border-[#6C6961]/50 bg-gradient-to-b from-[#2F2A1F]/90 to-[#1D180C]/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amg-gold/80 to-transparent opacity-80" />
+
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#F9D976] to-[#DEA821] flex items-center justify-center shadow-[0_0_30px_rgba(222,168,33,0.4)] border border-[#1D180C]">
+                  <Globe2 className="text-[#1D180C] w-7 h-7" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h1 className="font-heading text-2xl tracking-[0.25em] text-white uppercase font-black drop-shadow-lg">Dubai Expansion Matrix</h1>
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
+                    <span className="font-heading text-[11px] tracking-[0.4em] text-amg-gold/80 uppercase font-bold">Live Intelligence Feed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button className="w-14 h-14 rounded-full border border-[#6C6961] flex items-center justify-center text-white/50 hover:text-white hover:border-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all bg-[#2F2A1F]/50 backdrop-blur-md">
+                  <ShieldAlert className="w-6 h-6" strokeWidth={1.5} />
+                </button>
+                <button className="w-14 h-14 rounded-full border border-[#6C6961] flex items-center justify-center text-white/50 hover:text-white hover:border-white hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all bg-[#2F2A1F]/50 backdrop-blur-md">
+                  <Lock className="w-6 h-6" strokeWidth={1.5} />
+                </button>
               </div>
             </div>
-          )}
 
-          <div className="p-8">
+            {/* Quick Stats */}
+            <div className="flex items-center gap-8 overflow-hidden">
+              <div className="flex items-center gap-3 bg-[#2F2A1F] border border-[#6C6961] px-5 py-2.5 rounded-full shadow-inner hover:bg-[#383327] transition-colors">
+                <Zap className="w-4 h-4 text-amg-gold" />
+                <span className="font-mono text-[12px] tracking-wider text-white/90">SYS.OP.NOMINAL</span>
+              </div>
+              <div className="flex items-center gap-3 bg-[#2F2A1F] border border-[#6C6961] px-5 py-2.5 rounded-full shadow-inner hover:bg-[#383327] transition-colors">
+                <Activity className="w-4 h-4 text-amg-gold" />
+                <span className="font-mono text-[12px] tracking-wider text-white/90">LATENCY: 12ms</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-12 relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedPack.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               >
+                {/* Dossier Header */}
+                <div className="mb-14">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="bg-gradient-to-r from-amg-gold to-amg-gold-light px-5 py-2 rounded-sm shadow-[0_0_20px_rgba(222,168,33,0.5)]">
+                      <span className="font-heading text-[11px] tracking-[0.4em] uppercase text-[#000000] font-black">Classified Dossier</span>
+                    </div>
+                  </div>
+                  <h2 className="font-heading text-6xl md:text-7xl tracking-tighter text-white mb-6 drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] font-black">
+                    {selectedPack.name}
+                  </h2>
+                </div>
+                {/* Sub-navigation for Packs (Segmented Control Style) */}
+                {selectedNode.packs.length > 1 && (
+                  <div className="mb-12">
+                    <div className="flex p-2 bg-[#2F2A1F]/50 border border-[#6C6961] rounded-2xl relative shadow-inner backdrop-blur-md">
+                      {selectedNode.packs.map(pack => (
+                        <button
+                          key={pack.id}
+                          onClick={() => {
+                            setSelectedPackId(pack.id);
+                            setExpandedSection(null);
+                          }}
+                          className={`relative flex-1 py-4 font-heading rounded-xl text-[12px] font-bold tracking-[0.2em] uppercase z-10 transition-all duration-500 ${
+                            selectedPackId === pack.id ? 'text-[#000000]' : 'text-white/40 hover:text-white/80 hover:bg-white/5'
+                          }`}
+                        >
+                          {selectedPackId === pack.id && (
+                            <motion.div
+                              layoutId="activePackTab"
+                              className="absolute inset-0 bg-gradient-to-r from-[#F9D976] to-[#DEA821] rounded-xl -z-10 shadow-[0_0_25px_rgba(222,168,33,0.3)] border border-white/20"
+                              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                            />
+                          )}
+                          {pack.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {/* A. HERO MEDIA & QUICK STATS */}
                 <div className="relative h-80 rounded-[2.5rem] overflow-hidden mb-10 border border-[#6C6961] group shadow-2xl">
                   <div className="absolute inset-0 bg-white/5 transition-transform duration-1000 group-hover:scale-105" 
@@ -474,32 +526,32 @@ function Badge({ icon, text }: { icon: ReactNode, text: string }) {
 function StatCard({ label, value, highlight = false, delay = 0 }: { label: string, value: string, highlight?: boolean, delay?: number }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-amg-gold/[0.08] border-amg-gold/40' : 'bg-[#1D180C] border-[#6C6961]'} border transition-all duration-700 hover:border-white/20`}
+      transition={{ delay, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative p-8 rounded-[2rem] overflow-hidden group ${highlight ? 'bg-gradient-to-b from-amg-gold/[0.08] to-transparent border-amg-gold/50 shadow-[0_0_30px_rgba(222,168,33,0.1)]' : 'bg-gradient-to-b from-[#1D180C] to-black/40 border-[#6C6961] shadow-xl'} border transition-all duration-700 hover:-translate-y-1 hover:shadow-2xl hover:border-white/30`}
     >
-      <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${highlight ? 'via-amg-gold' : 'via-white/20'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
-      <span className="font-heading block text-[10px] tracking-[0.4em] text-white/20 uppercase mb-4 font-bold transition-colors duration-500 group-hover:text-white/40">{label}</span>
-      <span className={`block font-mono tracking-tighter ${highlight ? 'text-amg-gold text-5xl font-black drop-shadow-[0_0_15px_rgba(222,168,33,0.3)]' : 'text-white text-4xl font-extralight opacity-80 group-hover:opacity-100 transition-opacity duration-500'}`}>{value}</span>
+      <div className={`absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent ${highlight ? 'via-amg-gold' : 'via-white/30'} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000`} />
+      <span className={`font-heading block text-[11px] tracking-[0.3em] uppercase mb-4 transition-colors duration-500 ${highlight ? 'text-amg-gold/80 font-bold' : 'text-white/40 group-hover:text-white/60'}`}>{label}</span>
+      <span className={`block font-sans tracking-tight ${highlight ? 'text-amg-gold text-5xl font-black drop-shadow-[0_0_20px_rgba(222,168,33,0.4)]' : 'text-white text-4xl font-light opacity-90 group-hover:opacity-100 transition-opacity duration-500'}`}>{value}</span>
     </motion.div>
   );
 }
 
 function Accordion({ title, isOpen, onClick, children, icon }: { title: string, isOpen: boolean, onClick: () => void, children: ReactNode, icon?: ReactNode }) {
   return (
-    <div className={`border transition-all duration-500 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-[#1D180C] border-amg-gold/20' : 'bg-[#1D180C] border-[#6C6961] hover:border-white/20'}`}>
+    <div className={`border transition-all duration-700 rounded-[2rem] overflow-hidden ${isOpen ? 'bg-gradient-to-b from-[#1D180C] to-black/60 border-amg-gold/40 shadow-[0_10px_40px_rgba(0,0,0,0.5)]' : 'bg-[#1D180C] border-[#6C6961] hover:border-white/20 hover:bg-[#221c0e]'}`}>
       <button 
         onClick={onClick}
         className="w-full flex items-center justify-between p-8"
       >
         <div className="flex items-center gap-6">
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ${isOpen ? 'bg-amg-gold text-[#000000]' : 'bg-[#2F2A1F] border border-[#6C6961] text-amg-gold'}`}>
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shadow-inner ${isOpen ? 'bg-gradient-to-br from-amg-gold to-amg-gold-dark text-[#000000] shadow-[0_0_20px_rgba(222,168,33,0.4)] scale-105' : 'bg-[#2F2A1F] border border-[#6C6961] text-amg-gold group-hover:scale-105'}`}>
             {icon}
           </div>
-          <span className={`font-heading text-[11px] tracking-[0.25em] uppercase transition-colors duration-500 ${isOpen ? 'text-white font-bold' : 'text-[#9C9A94]'}`}>{title}</span>
+          <span className={`font-heading text-[12px] tracking-[0.3em] uppercase transition-all duration-500 ${isOpen ? 'text-white font-black drop-shadow-md' : 'text-[#9C9A94] font-medium'}`}>{title}</span>
         </div>
-        <div className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 ${isOpen ? 'rotate-180 bg-amg-gold border-amg-gold text-[#000000]' : 'bg-transparent border-[#6C6961] text-white/30'}`}>
+        <div className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-700 ${isOpen ? 'rotate-180 bg-white border-white text-[#000000] shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-transparent border-[#6C6961] text-white/40'}`}>
           <ChevronDown className="w-5 h-5" />
         </div>
       </button>
@@ -509,10 +561,10 @@ function Accordion({ title, isOpen, onClick, children, icon }: { title: string, 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="p-6 pt-0 mt-2">
+            <div className="p-8 pt-0 mt-2 border-t border-white/5 mx-8">
               {children}
             </div>
           </motion.div>
