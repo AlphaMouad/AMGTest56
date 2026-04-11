@@ -1,18 +1,30 @@
-import { useState, useEffect, useRef, type ReactNode } from 'react';
+import React, { useState, useEffect, useRef, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Map, { Marker, MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { 
-  MapPin, Maximize, ArrowRight, Zap, 
+  MapPin, Maximize, ArrowRight, Zap, Key,
+
   ChevronDown, Crosshair, Shield, Globe, TrendingUp,
   CheckCircle2, XCircle, Activity
 } from 'lucide-react';
 import { nodes, ViewType, NodeData, PackData } from './data/packs';
 
 // Use environment variable for Mapbox token to avoid hardcoding secrets
-const MAPBOX_TOKEN = import.meta.env?.VITE_MAPBOX_TOKEN || process.env.VITE_MAPBOX_TOKEN || "";
+const ENV_MAPBOX_TOKEN = (import.meta as any).env?.VITE_MAPBOX_TOKEN || (process as any).env?.VITE_MAPBOX_TOKEN || "";
 
 export default function App() {
+  const [userToken, setUserToken] = useState<string>(() => localStorage.getItem('amg_mapbox_token') || '');
+  const [tempTokenInput, setTempTokenInput] = useState('');
+  const MAPBOX_TOKEN = ENV_MAPBOX_TOKEN || userToken;
+
+  const handleTokenSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (tempTokenInput.trim()) {
+      localStorage.setItem('amg_mapbox_token', tempTokenInput.trim());
+      setUserToken(tempTokenInput.trim());
+    }
+  };
   const [selectedNodeId, setSelectedNodeId] = useState<string>(nodes[0].id);
   const [selectedPackId, setSelectedPackId] = useState<string>(nodes[0].packs[0].id);
   const [view, setView] = useState<ViewType>('INSTITUTIONAL');
@@ -98,32 +110,51 @@ export default function App() {
         <div className="w-1/2 h-full relative bg-[#161103] border-r border-white/[0.05] overflow-hidden flex flex-col">
           
           {!MAPBOX_TOKEN ? (
-            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center z-10 bg-[#161103]">
-              <div className="w-24 h-24 rounded-full bg-amg-gold/10 flex items-center justify-center mb-8 border border-amg-gold/20 shadow-[0_0_50px_rgba(222,168,33,0.15)]">
-                <MapPin className="w-10 h-10 text-amg-gold" strokeWidth={1} />
-              </div>
-              <h2 className="font-heading text-2xl tracking-[0.2em] text-white uppercase mb-4">Mapbox Token Required</h2>
-              <p className="text-white/60 text-[15px] max-w-md leading-relaxed font-light mb-8">
-                The geospatial intelligence matrix requires a valid Mapbox token to initialize. Please configure your environment variables to proceed.
-              </p>
-              <div className="bg-black/50 border border-white/10 rounded-xl p-6 text-left w-full max-w-md backdrop-blur-md">
-                <h3 className="font-heading text-[10px] tracking-[0.2em] text-amg-gold uppercase mb-4 flex items-center gap-2">
-                  <Shield className="w-3.5 h-3.5" /> Configuration Steps
-                </h3>
-                <ol className="space-y-4 text-sm text-white/70 font-light">
-                  <li className="flex gap-3">
-                    <span className="text-amg-gold font-mono">01.</span>
-                    <span>Go to Settings {'>'} Secrets in AI Studio</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-amg-gold font-mono">02.</span>
-                    <span>Add a new secret named <code className="bg-white/10 px-2 py-0.5 rounded text-white font-mono text-xs ml-1">VITE_MAPBOX_TOKEN</code></span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="text-amg-gold font-mono">03.</span>
-                    <span>Paste your public Mapbox token as the value</span>
-                  </li>
-                </ol>
+            <div className="flex-1 flex flex-col items-center justify-center p-12 text-center z-10 bg-[#161103] relative">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amg-gold/5 via-transparent to-transparent opacity-40 pointer-events-none" />
+              <div className="relative z-10 w-full max-w-lg flex flex-col items-center">
+                <div className="w-24 h-24 rounded-full bg-amg-gold/10 flex items-center justify-center mb-8 border border-amg-gold/20 shadow-[0_0_50px_rgba(222,168,33,0.15)] relative">
+                  <div className="absolute inset-0 border border-amg-gold/30 rounded-full animate-[spin_8s_linear_infinite]" />
+                  <MapPin className="w-10 h-10 text-amg-gold relative z-10" strokeWidth={1.5} />
+                </div>
+                <h2 className="font-heading text-3xl tracking-[0.2em] text-white uppercase mb-4 text-center">System Offline</h2>
+                <p className="text-white/60 text-[15px] leading-relaxed font-light mb-10 text-center">
+                  The geospatial intelligence matrix requires a valid Mapbox authentication token to establish an uplink. Initialize the system below to proceed.
+                </p>
+
+                <div className="w-full bg-[#000000]/50 border border-white/10 rounded-2xl p-8 backdrop-blur-md shadow-2xl relative overflow-hidden group">
+                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-amg-gold/50 to-transparent opacity-50" />
+                  <h3 className="font-heading text-[10px] tracking-[0.2em] text-amg-gold uppercase mb-6 flex items-center gap-2 justify-center">
+                    <Key className="w-3.5 h-3.5" /> Authentication Required
+                  </h3>
+
+                  <form onSubmit={handleTokenSubmit} className="flex flex-col gap-5">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                        <Shield className="w-4 h-4 text-white/30 group-focus-within:text-amg-gold transition-colors duration-300" />
+                      </div>
+                      <input
+                        type="text"
+                        value={tempTokenInput}
+                        onChange={(e) => setTempTokenInput(e.target.value)}
+                        placeholder="Enter Mapbox Public Token (pk.ey...)"
+                        className="w-full bg-white/[0.03] border border-white/10 rounded-xl py-4 pl-12 pr-4 text-[13px] font-mono text-white placeholder-white/20 focus:outline-none focus:border-amg-gold/50 focus:bg-white/[0.05] transition-all duration-300 shadow-inner"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={!tempTokenInput.trim()}
+                      className="w-full bg-amg-gold hover:bg-[#F9D976] text-[#000000] font-heading text-[11px] font-bold tracking-[0.2em] uppercase py-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(222,168,33,0.2)] hover:shadow-[0_0_30px_rgba(222,168,33,0.4)] flex items-center justify-center gap-2"
+                    >
+                      Establish Uplink <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+
+                  <div className="mt-6 pt-5 border-t border-white/5 flex flex-col gap-2 text-center">
+                    <p className="text-white/40 text-[11px] font-light">Don't have a token? Get one free at <a href="https://mapbox.com" target="_blank" rel="noopener noreferrer" className="text-amg-gold hover:underline">mapbox.com</a></p>
+                    <p className="text-white/30 text-[10px] font-light mt-1">Alternatively, configure the <code className="font-mono text-white/40">VITE_MAPBOX_TOKEN</code> environment variable.</p>
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
