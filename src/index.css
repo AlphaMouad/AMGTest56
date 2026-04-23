@@ -27,6 +27,9 @@
     --color-amg-gold: #DEA821;
     --color-amg-gold-light: #F9D976;
     --color-amg-gold-dark: #A67C00;
+    --color-amg-tabs: #2F2A1F;
+    --color-amg-border: #6C6961;
+    --color-amg-text-muted: #9C9A94;
     --color-platinum: #E5E4E2;
     --color-obsidian: #161103;
     --color-void: #000000;
@@ -79,13 +82,13 @@
 }
 
 :root {
-    /* Deep charcoal / obsidian background */
-    --background: #161103;
-    --foreground: oklch(0.985 0 0);
-    --card: #1c1604;
-    --card-foreground: oklch(0.985 0 0);
-    --popover: #1c1604;
-    --popover-foreground: oklch(0.985 0 0);
+    /* Brand Design System */
+    --background: #1D180C; /* Darker main background */
+    --foreground: #FFFFFF;
+    --card: #1D180C; /* Container color matching background */
+    --card-foreground: #FFFFFF;
+    --popover: #1D180C;
+    --popover-foreground: #FFFFFF;
     
     /* Default to Platinum/Silver for FDI */
     --primary: oklch(0.85 0.01 250); /* Platinum/Silver */
@@ -120,12 +123,12 @@
 }
 
 .dark {
-    --background: #161103;
-    --foreground: oklch(0.985 0 0);
-    --card: #1c1604;
-    --card-foreground: oklch(0.985 0 0);
-    --popover: #1c1604;
-    --popover-foreground: oklch(0.985 0 0);
+    --background: #1D180C;
+    --foreground: #FFFFFF;
+    --card: #1D180C;
+    --card-foreground: #FFFFFF;
+    --popover: #1D180C;
+    --popover-foreground: #FFFFFF;
     --primary: oklch(0.85 0.01 250); /* Platinum/Silver */
     --primary-foreground: oklch(0.12 0 0);
     --secondary: oklch(0.20 0 0);
