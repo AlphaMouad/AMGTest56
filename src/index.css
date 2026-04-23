@@ -28,7 +28,7 @@
     --color-amg-gold-light: #F9D976;
     --color-amg-gold-dark: #A67C00;
     --color-platinum: #E5E4E2;
-    --color-obsidian: #161103;
+    --color-obsidian: #1D180C;
     --color-void: #000000;
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
@@ -80,7 +80,7 @@
 
 :root {
     /* Deep charcoal / obsidian background */
-    --background: #161103;
+    --background: #1D180C;
     --foreground: oklch(0.985 0 0);
     --card: #1c1604;
     --card-foreground: oklch(0.985 0 0);
@@ -120,7 +120,7 @@
 }
 
 .dark {
-    --background: #161103;
+    --background: #1D180C;
     --foreground: oklch(0.985 0 0);
     --card: #1c1604;
     --card-foreground: oklch(0.985 0 0);
